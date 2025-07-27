@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Edit, Trash2, X } from 'lucide-react';
+import { Edit } from 'lucide-react';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import type { Card } from '../App';
@@ -11,6 +11,7 @@ interface CardDisplayProps {
   onReview: () => void;
   onUpdateCard: (cardId: string, updates: Partial<Card>) => void;
   onDeleteCard: (cardId: string) => void;
+  onBack?: () => void;  // Add this line
 }
 
 const CardDisplay = ({ 
@@ -19,7 +20,8 @@ const CardDisplay = ({
   onMastered, 
   onReview, 
   onUpdateCard, 
-  onDeleteCard 
+  onDeleteCard,
+  onBack  // Add this line
 }: CardDisplayProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -91,7 +93,14 @@ const CardDisplay = ({
     return (
       <div className={`card-display detailed ${isEditing ? 'editing' : ''}`}>
         <div className="card-header">
-          <h3>Card Details</h3>
+          <div className="card-header-left">
+            {onBack && (
+              <button onClick={onBack} className="back-btn">
+                ← Back to Card
+              </button>
+            )}
+            <h3>Card Details</h3>
+          </div>
           <div className="card-actions">
             <button onClick={handleEdit} className="action-btn">
               <Edit size={16} />

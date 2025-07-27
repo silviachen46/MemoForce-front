@@ -21,10 +21,10 @@ const Home = ({ currentSet, onAddCards, onUpdateCard, onDeleteCard, apiKey, onCh
   const [generationMode, setGenerationMode] = useState<'basic' | 'formula' | 'code'>('basic');
   const [isLoading, setIsLoading] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [showDetailedView, setShowDetailedView] = useState(false);
   const [showGenerateMore, setShowGenerateMore] = useState(false);
   const [previousCardIndex, setPreviousCardIndex] = useState(0);
   const [sortedCardIndices, setSortedCardIndices] = useState<number[]>([]);
+  const [showDetailedView, setShowDetailedView] = useState(false);
 
   // Function to sort cards based on review mode
   const getSortedCards = (cards: Card[]) => {
@@ -154,6 +154,12 @@ const Home = ({ currentSet, onAddCards, onUpdateCard, onDeleteCard, apiKey, onCh
     onUpdateCard(card.id, {
       reviewedCount: card.reviewedCount + 1
     });
+    
+    setShowDetailedView(true);
+  };
+
+  const handleBackToCard = () => {
+    setShowDetailedView(false);
   };
 
   const handleNextCard = () => {
@@ -275,6 +281,7 @@ const Home = ({ currentSet, onAddCards, onUpdateCard, onDeleteCard, apiKey, onCh
             onReview={handleReview}
             onUpdateCard={onUpdateCard}
             onDeleteCard={onDeleteCard}
+            onBack={handleBackToCard}
           />
         )}
       </div>

@@ -1,4 +1,4 @@
-import type { Card, CardSet } from '../App';
+import type { CardSet } from '../App';
 
 const STORAGE_KEYS = {
   CARD_SETS: 'memoforce_card_sets',

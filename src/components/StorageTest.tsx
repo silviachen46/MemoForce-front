@@ -21,7 +21,8 @@ const StorageTest = () => {
             isMastered: false
           }
         ],
-        createdAt: new Date()
+        createdAt: new Date(),
+        reviewMode: 'normal'
       };
 
       // 测试保存

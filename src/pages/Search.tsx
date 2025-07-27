@@ -91,7 +91,7 @@ const Search = ({ cardSets, onDeleteCard }: SearchProps) => {
           {searchQuery.trim() ? (
             searchResults.length > 0 ? (
               <div className="cards-grid">
-                {searchResults.map(({ card, set, setIndex, cardIndex }) => (
+                {searchResults.map(({ card, set, cardIndex }) => (
                   <div key={card.id} className="card-item">
                     <button 
                       onClick={() => handleDeleteCard(card)}
