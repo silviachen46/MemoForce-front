@@ -13,9 +13,19 @@ interface HomeProps {
   apiKey: string;
   onCheckApiKey: () => boolean;
   onImportData?: (cardSets: CardSet[]) => void;
+  onShowApiKeyModal?: () => void;  // Add this line
 }
 
-const Home = ({ currentSet, onAddCards, onUpdateCard, onDeleteCard, apiKey, onCheckApiKey, onImportData }: HomeProps) => {
+const Home = ({ 
+  currentSet, 
+  onAddCards, 
+  onUpdateCard, 
+  onDeleteCard, 
+  apiKey, 
+  onCheckApiKey, 
+  onImportData,
+  onShowApiKeyModal  // Add this line
+}: HomeProps) => {
   const [question, setQuestion] = useState('');
   const [numQuestions, setNumQuestions] = useState(5);
   const [generationMode, setGenerationMode] = useState<'basic' | 'formula' | 'code'>('basic');
@@ -174,6 +184,13 @@ const Home = ({ currentSet, onAddCards, onUpdateCard, onDeleteCard, apiKey, onCh
     }
   };
 
+  // Add this function to handle API key button click
+  const handleApiKeyClick = () => {
+    if (onShowApiKeyModal) {
+      onShowApiKeyModal();
+    }
+  };
+
   if (!currentSet) {
     return (
       <div className="home-page">
@@ -193,14 +210,25 @@ const Home = ({ currentSet, onAddCards, onUpdateCard, onDeleteCard, apiKey, onCh
         <div className="card-generation">
           <div className="generation-header">
             <h2>Generate Cards for: {currentSet.name}</h2>
-            {showGenerateMore && currentSet.cards.length > 0 && (
-              <button 
-                onClick={handleBack}
-                className="back-btn"
-              >
-                ← Back to Cards
-              </button>
-            )}
+            <div className="generation-header-actions">
+              {onShowApiKeyModal && (
+                <button 
+                  onClick={handleApiKeyClick}
+                  className="api-key-btn"
+                  title="Update API Key"
+                >
+                  🔑 API Key
+                </button>
+              )}
+              {showGenerateMore && currentSet.cards.length > 0 && (
+                <button 
+                  onClick={handleBack}
+                  className="back-btn"
+                >
+                  ← Back to Cards
+                </button>
+              )}
+            </div>
           </div>
           <div className="input-section">
             <textarea

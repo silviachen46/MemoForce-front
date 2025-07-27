@@ -208,6 +208,11 @@ function MainContent() {
     return true;
   };
 
+  // Add this function to handle API key button click
+  const handleShowApiKeyModal = () => {
+    setShowApiKeyModal(true);
+  };
+
   // Show loading state
   if (isLoading) {
     return (
@@ -246,6 +251,7 @@ function MainContent() {
                   apiKey={apiKey}
                   onCheckApiKey={checkApiKey}
                   onImportData={handleImportData}
+                  onShowApiKeyModal={handleShowApiKeyModal}
                 />
               } 
             />
