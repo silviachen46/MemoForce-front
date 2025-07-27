@@ -50,9 +50,14 @@ const Sidebar = ({ isExpanded, onToggle, cardSets, onCreateSet, onSelectSet }: S
               <div 
                 key={set.id} 
                 className="set-item"
+                data-id={set.id}  // 添加data-id属性
                 onClick={() => onSelectSet(set)}
               >
-                <Folder size={16} />
+                {set.id === 'favorites' ? (
+                  <span className="favorites-icon">⭐</span>
+                ) : (
+                  <Folder size={16} />
+                )}
                 <span>{set.name}</span>
                 <span className="card-count">({set.cards.length})</span>
               </div>

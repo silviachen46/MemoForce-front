@@ -13,7 +13,8 @@ interface HomeProps {
   apiKey: string;
   onCheckApiKey: () => boolean;
   onImportData?: (cardSets: CardSet[]) => void;
-  onShowApiKeyModal?: () => void;  // Add this line
+  onShowApiKeyModal?: () => void;
+  onToggleFavorite?: (cardId: string) => void;  // 添加收藏回调
 }
 
 const Home = ({ 
@@ -24,7 +25,8 @@ const Home = ({
   apiKey, 
   onCheckApiKey, 
   onImportData,
-  onShowApiKeyModal  // Add this line
+  onShowApiKeyModal,
+  onToggleFavorite
 }: HomeProps) => {
   const [question, setQuestion] = useState('');
   const [numQuestions, setNumQuestions] = useState(5);
@@ -315,6 +317,7 @@ const Home = ({
             onUpdateCard={onUpdateCard}
             onDeleteCard={onDeleteCard}
             onBack={handleBackToCard}
+            onToggleFavorite={onToggleFavorite}  // 传递收藏回调
           />
         )}
       </div>

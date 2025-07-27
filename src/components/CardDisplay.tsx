@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Edit } from 'lucide-react';
+import { Edit, Star } from 'lucide-react';  // 添加Star图标
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import type { Card } from '../App';
@@ -11,7 +11,8 @@ interface CardDisplayProps {
   onReview: () => void;
   onUpdateCard: (cardId: string, updates: Partial<Card>) => void;
   onDeleteCard: (cardId: string) => void;
-  onBack?: () => void;  // Add this line
+  onBack?: () => void;
+  onToggleFavorite?: (cardId: string) => void;  // 添加收藏回调
 }
 
 const CardDisplay = ({ 
@@ -21,7 +22,8 @@ const CardDisplay = ({
   onReview, 
   onUpdateCard, 
   onDeleteCard,
-  onBack  // Add this line
+  onBack,
+  onToggleFavorite
 }: CardDisplayProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -89,6 +91,13 @@ const CardDisplay = ({
     setShowHint(!showHint);
   };
 
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onToggleFavorite) {
+      onToggleFavorite(card.id);
+    }
+  };
+
   if (showDetailed) {
     return (
       <div className={`card-display detailed ${isEditing ? 'editing' : ''}`}>
@@ -101,7 +110,17 @@ const CardDisplay = ({
             )}
             <h3>Card Details</h3>
           </div>
-          <div className="card-actions">
+          <div className="card-header-right">
+            {/* 添加收藏星星 */}
+            {onToggleFavorite && (
+              <button 
+                onClick={handleToggleFavorite}
+                className={`favorite-btn ${card.isFavorite ? 'favorited' : ''}`}
+                title={card.isFavorite ? '取消收藏' : '添加到收藏'}
+              >
+                <Star size={20} fill={card.isFavorite ? '#FFD700' : 'none'} />
+              </button>
+            )}
             <button onClick={handleEdit} className="action-btn">
               <Edit size={16} />
             </button>
@@ -213,6 +232,16 @@ const CardDisplay = ({
     <div className={`card-display ${isFlipped ? 'flipped' : ''}`}>
       <div className="card-inner" onClick={handleFlip}>
         <div className="card-front">
+          {/* 添加收藏星星到左上角 */}
+          {onToggleFavorite && (
+            <button 
+              onClick={handleToggleFavorite}
+              className={`favorite-btn ${card.isFavorite ? 'favorited' : ''}`}
+              title={card.isFavorite ? '取消收藏' : '添加到收藏'}
+            >
+              <Star size={18} fill={card.isFavorite ? '#FFD700' : 'none'} />
+            </button>
+          )}
           <button 
             onClick={handleDeleteClick}
             className="card-delete-btn"
@@ -245,6 +274,16 @@ const CardDisplay = ({
           </div>
         </div>
         <div className="card-back">
+          {/* 添加收藏星星到背面左上角 */}
+          {onToggleFavorite && (
+            <button 
+              onClick={handleToggleFavorite}
+              className={`favorite-btn ${card.isFavorite ? 'favorited' : ''}`}
+              title={card.isFavorite ? '取消收藏' : '添加到收藏'}
+            >
+              <Star size={18} fill={card.isFavorite ? '#FFD700' : 'none'} />
+            </button>
+          )}
           <button 
             onClick={handleDeleteClick}
             className="card-delete-btn"

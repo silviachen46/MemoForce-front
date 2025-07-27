@@ -20,6 +20,7 @@ export interface Card {
   reviewedCount: number;
   masteredCount: number;
   isMastered: boolean;
+  isFavorite?: boolean;  // 添加收藏字段
 }
 
 export interface CardSet {
@@ -107,6 +108,63 @@ function MainContent() {
       }
     }
   }, [cardSets, currentSet, apiKey, isLoading]);
+
+  // 创建默认收藏夹
+  const createFavoritesSet = (): CardSet => ({
+    id: 'favorites',
+    name: 'Collected',
+    cards: [],
+    createdAt: new Date(),
+    reviewMode: 'normal'
+  });
+
+  // 初始化收藏夹
+  useEffect(() => {
+    if (!isLoading && cardSets.length > 0) {
+      const favoritesSet = cardSets.find(set => set.id === 'favorites');
+      if (!favoritesSet) {
+        const newFavoritesSet = createFavoritesSet();
+        setCardSets(prev => [newFavoritesSet, ...prev]);
+      }
+    }
+  }, [isLoading, cardSets.length]);
+
+  // 处理收藏/取消收藏
+  const handleToggleFavorite = (cardId: string) => {
+    // 更新原卡片的状态
+    const updatedCardSets = cardSets.map(set => ({
+      ...set,
+      cards: set.cards.map(card => 
+        card.id === cardId 
+          ? { ...card, isFavorite: !card.isFavorite }
+          : card
+      )
+    }));
+    
+    setCardSets(updatedCardSets);
+    
+    // 更新收藏夹
+    const favoritesSet = updatedCardSets.find(set => set.id === 'favorites');
+    const card = updatedCardSets.flatMap(set => set.cards).find(c => c.id === cardId);
+    
+    if (favoritesSet && card) {
+      const updatedFavoritesSet = { ...favoritesSet };
+      
+      if (card.isFavorite) {
+        // 添加到收藏夹
+        if (!updatedFavoritesSet.cards.find(c => c.id === cardId)) {
+          updatedFavoritesSet.cards = [...updatedFavoritesSet.cards, card];
+        }
+      } else {
+        // 从收藏夹移除
+        updatedFavoritesSet.cards = updatedFavoritesSet.cards.filter(c => c.id !== cardId);
+      }
+      
+      setCardSets(prev => prev.map(set => 
+        set.id === 'favorites' ? updatedFavoritesSet : set
+      ));
+    }
+  };
 
   const handleCreateSet = (setName: string) => {
     const newSet: CardSet = {
@@ -252,6 +310,7 @@ function MainContent() {
                   onCheckApiKey={checkApiKey}
                   onImportData={handleImportData}
                   onShowApiKeyModal={handleShowApiKeyModal}
+                  onToggleFavorite={handleToggleFavorite}
                 />
               } 
             />

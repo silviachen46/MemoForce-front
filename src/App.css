@@ -1821,3 +1821,48 @@ body {
   font-size: 1.5rem;
   font-weight: 600;
 }
+
+/* 收藏按钮样式 */
+.favorite-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  color: #666;
+}
+
+.favorite-btn:hover {
+  background: rgba(255, 215, 0, 0.1);
+  transform: scale(1.1);
+}
+
+.favorite-btn.favorited {
+  color: #FFD700;
+}
+
+.favorite-btn.favorited:hover {
+  background: rgba(255, 215, 0, 0.2);
+}
+
+/* 在详细视图中调整收藏按钮位置 */
+.card-display.detailed .favorite-btn {
+  position: static;
+  margin-right: 8px;
+}
+
+/* 收藏夹特殊样式 */
+.set-item[data-id="favorites"] {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #333;
+  font-weight: bold;
+}
+
+.set-item[data-id="favorites"]:hover {
+  background: linear-gradient(135deg, #FFA500, #FF8C00);
+}
