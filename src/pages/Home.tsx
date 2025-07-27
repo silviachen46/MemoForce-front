@@ -153,6 +153,11 @@ const Home = ({
       reviewedCount: card.reviewedCount + 1,
       isMastered: card.masteredCount + 1 >= 3
     });
+    
+    // Move to next card after updating
+    if (currentCardIndex < sortedCardIndices.length - 1) {
+      setCurrentCardIndex(currentCardIndex + 1);
+    }
   };
 
   const handleReview = () => {
