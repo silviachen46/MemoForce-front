@@ -323,4 +323,3 @@ interface CardSet {
 ## 许可证
 
 MIT License
-# MemoForce-front
