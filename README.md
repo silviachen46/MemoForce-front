@@ -1,5 +1,168 @@
 # MemoForce - Flashcard Learning App
 
+MemoForce is a modern flashcard-based learning application built with React + TypeScript, offering an intuitive UI and powerful learning features.
+
+## Features
+
+### 🎯 Core Features
+- **Collection Management**: Create and manage study sets
+- **Smart Generation**: Automatically generate flashcards from input questions
+- **Interactive Learning**: Flip cards, view details, and edit content
+- **Progress Tracking**: Track mastery and review count per card
+- **Data Analytics**: Analyze learning progress and effectiveness
+
+### 📱 User Interface
+- **Responsive Design**: Optimized for both desktop and mobile
+- **Modern UI**: Gradient themes with smooth animations
+- **Intuitive Navigation**: Top navbar and collapsible sidebar
+- **Card Animations**: 3D flip and hover effects
+
+## Page Structure
+
+### 1. Home Page
+- **Welcome View**: Onboarding experience for first-time users
+- **Card Generation**: Enter questions and quantity to generate flashcards
+- **Card Learning**: Flip cards to see answers; mark as Mastered or Review
+- **Detail Mode**: View full card info and learning stats
+
+### 2. Analytics Page
+- **Overall Stats**: Total sets, number of cards, mastery rate, etc.
+- **Set Insights**: In-depth data per flashcard set
+- **Progress Timeline**: Review and mastery frequency tracking
+
+### 3. Manage Page
+- **Manage Sets**: View, edit, and delete collections
+- **Card Preview**: Browse all cards in a collection
+- **Batch Actions**: Delete and manage multiple items at once
+
+## Tech Stack
+
+- **Frontend Framework**: React 19.1.0
+- **Language**: TypeScript
+- **Build Tool**: Vite
+- **Routing**: React Router DOM
+- **Icon Library**: Lucide React
+- **Styling**: CSS3 (custom styles)
+
+## Getting Started
+
+### Install dependencies
+```bash
+npm install
+```
+
+### Start development server
+```bash
+npm run dev
+```
+
+The app will run at `http://localhost:5173`
+
+### Build for production
+```bash
+npm run build
+```
+
+## User Guide
+
+### Create a Study Collection
+1. Click the sidebar expand button
+2. Click the "+" button to create a new collection
+3. Enter the collection name and confirm
+4. Sidebar auto-collapses and navigates to the main page
+
+### Generate Flashcards
+1. Enter your question or topic in the chat input
+2. Set the number of cards to generate
+3. Click the "Generate" button
+4. Cards are generated via simulated API call
+
+### Learn with Flashcards
+1. **Flip to Reveal**: Click a card to flip and view the answer
+2. **Mark as Mastered**: Click "Mastered" to count it and move on
+3. **Detailed Review**: Click "Review" to see full info and stats
+4. **Edit Card**: Modify question, answer, and hint in detail mode
+
+### View Learning Data
+- **Analytics Page**: See overall progress and set-level stats
+- **Manage Page**: Manage collections and card-level insights
+
+## Project Structure
+
+```
+src/
+├── components/          # Reusable components
+│   ├── TopNav.tsx      # Top navigation bar
+│   ├── Sidebar.tsx     # Sidebar navigation
+│   └── CardDisplay.tsx # Card display and controls
+├── pages/              # Page components
+│   ├── Home.tsx        # Home page
+│   ├── Analytics.tsx   # Analytics page
+│   └── Manage.tsx      # Manage page
+├── App.tsx             # Main app component
+├── main.tsx            # Entry point
+└── App.css             # Global styles
+```
+
+## Data Models
+
+### Card Interface
+```typescript
+interface Card {
+  id: string;
+  question: string;
+  answer: string;
+  hint?: string;
+  reviewedCount: number;
+  masteredCount: number;
+  isMastered: boolean;
+}
+```
+
+### CardSet Interface
+```typescript
+interface CardSet {
+  id: string;
+  name: string;
+  cards: Card[];
+  createdAt: Date;
+}
+```
+
+## Development Notes
+
+### State Management
+- Managed using React Hooks
+- Core states include: current page, sidebar visibility, card sets, selected set
+
+### Component Communication
+- Props for data and callbacks
+- TypeScript ensures strong typing and safety
+
+### Styling Strategy
+- Uses modern CSS3 features
+- CSS Grid and Flexbox layout
+- Fully responsive for mobile support
+
+## Future Improvements
+
+- [ ] Add local storage support
+- [ ] Integrate real AI API for card generation
+- [ ] Add user authentication
+- [ ] Import/export flashcards
+- [ ] Add study reminders
+- [ ] Support multimedia content (images, audio)
+
+## Contribution
+
+Feel free to submit Issues or Pull Requests to help improve the project!
+
+## License
+
+MIT License
+
+# MemoForce - Flashcard Learning App
+
 MemoForce是一个现代化的记忆卡片学习应用，使用React + TypeScript构建，提供直观的用户界面和强大的学习功能。
 
 ## 功能特性
